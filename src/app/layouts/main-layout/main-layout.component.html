@@ -1,0 +1,111 @@
+<nz-layout class="app-layout">
+    <!-- Descktop Sidebar -->
+    <nz-sider
+      class="menu-sidebar"
+      nzCollapsible
+      nzWidth="257px"
+      nzBreakpoint="md"
+      [(nzCollapsed)]="isCollapsed"
+      [nzTrigger]="null"
+      nzTheme="light"
+      [nzCollapsedWidth]="isMobile ? 0 : 80"
+    >
+      <div class="sidebar-logo">
+          <img src="/assets/logo.svg" alt="logo" />
+          <h1>CoinX</h1>
+      </div>
+      <ul
+        nz-menu
+        nzTheme="light"
+        nzMode="inline"
+        [nzInlineCollapsed]="isCollapsed"
+      >
+        <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="appstore">
+          <ul>
+            <li nz-menu-item nzMatchRouter>
+              <a routerLink="/welcome">Welcome</a>
+            </li>
+            <li nz-menu-item nzMatchRouter>
+              <a>Monitor</a>
+            </li>
+            <li nz-menu-item nzMatchRouter>
+              <a>Workplace</a>
+            </li>
+          </ul>
+        </li>
+        <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
+          <ul>
+            <li nz-menu-item nzMatchRouter>
+              <a>Basic Form</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nz-sider>
+  
+    <!-- Mobile Side Menu -->
+    <nz-drawer
+      *ngIf="isMobile"
+      [nzVisible]="isDrawerOpen"
+      [nzClosable]="true"
+      [nzPlacement]="'left'"
+      [nzWidth]="'80%'"
+      (nzOnClose)="isDrawerOpen = false"
+    >
+      <ul nz-menu nzTheme="light" nzMode="inline">
+        <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
+          <ul>
+            <li nz-menu-item>
+              <a routerLink="/welcome">Welcome</a>
+            </li>
+            <li nz-menu-item>
+              <a>Monitor</a>
+            </li>
+            <li nz-menu-item>
+              <a>Workplace</a>
+            </li>
+          </ul>
+        </li>
+        <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
+          <ul>
+            <li nz-menu-item>
+              <a>Basic Form</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nz-drawer>
+  
+    <!-- Main Content -->
+    <nz-layout>
+      <nz-header class="app-header">
+        <div class="header-content">
+          <span
+            class="header-trigger hidden md:inline"
+            (click)="isCollapsed = !isCollapsed"
+          >
+            <nz-icon
+              class="trigger"
+              [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+            />
+          </span>
+  
+          <span
+            class="header-trigger md:hidden"
+            (click)="isDrawerOpen = true"
+          >
+            <nz-icon class="trigger" nzType="menu" nzTheme="outline"></nz-icon>
+          </span>
+  
+          <app-theme-toggle></app-theme-toggle>
+        </div>
+      </nz-header>
+  
+      <nz-content>
+        <div class="inner-content">
+          <router-outlet></router-outlet>
+        </div>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+  
