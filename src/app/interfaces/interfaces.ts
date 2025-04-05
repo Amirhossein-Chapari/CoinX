@@ -1,8 +1,4 @@
-export interface Register {
-  username: string;
-  password: string;
-}
-export interface Login {
+export interface IAuthCredentials {
   username: string;
   password: string;
 }

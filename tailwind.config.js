@@ -14,6 +14,13 @@ module.exports = {
         neutral_gray: '#717184'
       }
     },
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: "1rem",
+        lg: "5rem",
+      }
+    }
   },
   plugins: [],
 }

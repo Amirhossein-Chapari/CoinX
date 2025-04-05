@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { Register } from '../../../interfaces/interfaces';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/authentication/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { IAuthCredentials } from '../../../interfaces/interfaces';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
-  userData: Register = {
+  userData: IAuthCredentials = {
     username: '',
     password: '',
   };
@@ -27,12 +27,12 @@ export class RegisterComponent {
   ) {}
   handleRegister() {
     this.isLoading = true;
-    console.log('🔹 Sending register data:', this.userData);
+    console.log('Sending register data:', this.userData);
   
     this.authService.register(this.userData).pipe(
       catchError((error) => {
         this.isLoading = false;
-        console.error('❌ Register error:', error);
+        console.error('Register error:', error);
         this.toastr.error('Something went wrong, please try again.', '', {
           positionClass: 'toast-bottom-right',
           timeOut:5000,
@@ -45,8 +45,8 @@ export class RegisterComponent {
       })
     ).subscribe((response) => {
       if (response) {
-        console.log('✅ Register successful, received response:', response);
-        this.toastr.success('Welcome to the system!', 'Registration Successful',{
+        console.log('received response:', response);
+        this.toastr.success('Welcome!', 'Registration Successful',{
           positionClass: 'toast-bottom-right',
           timeOut:5000,
           closeButton:false,

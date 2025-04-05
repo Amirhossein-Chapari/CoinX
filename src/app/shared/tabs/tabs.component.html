@@ -1,0 +1,16 @@
+<nz-tabset>
+    @for (tab of tabs; track tab) {
+      <nz-tab [nzTitle]="titleTemplate">
+        <ng-template #titleTemplate>
+          <nz-icon [nzType]="tab.icon" />
+          {{ tab.name }}
+        </ng-template>
+        
+        @if (typeof tab.content === 'string') {
+          {{ tab.content }}
+        } @else {
+          <ng-container *ngComponentOutlet="tab.content"></ng-container>
+        }
+      </nz-tab>
+    }
+</nz-tabset>

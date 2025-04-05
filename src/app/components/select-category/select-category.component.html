@@ -1,0 +1,13 @@
+<nz-select
+nzShowSearch
+nzServerSearch
+nzPlaceHolder="input search text"
+[(ngModel)]="selectedValue"
+[nzShowArrow]="false"
+[nzFilterOption]="nzFilterOption"
+>
+@for (item of listOfOption; track item) {
+  <nz-option [nzLabel]="item" [nzValue]="item"></nz-option>
+}
+</nz-select>
+<!-- (nzOnSearch)="search($event)" -->

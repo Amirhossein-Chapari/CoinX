@@ -1,1 +1,33 @@
-<app-area-chart></app-area-chart>
+<div class="grid grid-cols-4 lg:grid-rows-5 gap-2 max-h-[85vh] auto-rows-min">
+  <!-- Purchase -->
+  <div
+    class="lg:row-span-5 col-span-4 lg:col-span-1 custom-shadow p-4 order-1 lg:order-3"
+  >
+    <h1 class="text-7xl text-neutral_gray text-center my-10">$90</h1>
+    <app-tabs [tabs]="generalTabs"></app-tabs>
+  </div>
+
+  <!-- Area Chart -->
+  <div
+    class="col-span-4 lg:col-span-2 lg:row-span-3 order-2 lg:order-1 custom-shadow p-5"
+  >
+    <app-area-chart></app-area-chart>
+  </div>
+
+  <!-- Details -->
+  <div
+    class="col-span-4 lg:col-span-1 lg:row-span-3 custom-shadow order-3 lg:order-2 flex flex-col items-center p-2"
+  >
+    <app-date-picker></app-date-picker>
+    <app-select-category></app-select-category>
+    <div class="w-[270px] mt-3 py-3">
+      <app-radialbar-chart></app-radialbar-chart>
+    </div>
+  </div>
+
+  <!-- Pie Chart -->
+  <div class="col-span-4 lg:col-span-3 lg:row-span-2 order-4 custom-shadow flex items-center">
+    <!-- <app-advanced-pie-chart></app-advanced-pie-chart> -->
+    <app-polar-area-chart></app-polar-area-chart>
+  </div>
+</div>

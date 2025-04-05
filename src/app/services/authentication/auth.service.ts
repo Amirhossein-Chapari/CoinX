@@ -1,41 +1,43 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Login, Register } from '../../interfaces/interfaces';
+import { IAuthCredentials } from '../../interfaces/interfaces';
 import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private API_TO_LOGIN = environment.API_TO_LOGIN;
-  private API_TO_REGISTER = environment.API_TO_REGISTER;
-  http = inject(HttpClient);
+  private API_TO_REGISTER = environment.baseUrl + environment.authentication.register;
+  private API_TO_LOGIN = environment.baseUrl + environment.authentication.login;
 
-  register(userData: Register): Observable<Register> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
+  constructor(private http: HttpClient) {}
 
-    console.log('📤 Register Headers:', headers.keys());
-
-    return this.http.post<Register>(this.API_TO_REGISTER, userData, { headers });
+  register(userData: IAuthCredentials): Observable<any> {
+    return this.http.post(this.API_TO_REGISTER, userData);
   }
 
-  login(userData: Login): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
+  login(userData: IAuthCredentials): Observable<any> {
+    return this.http
+      .post(this.API_TO_LOGIN, userData)
+      .pipe(
+        tap((res: any) => {
+          if (res.tokens.access) {
+            localStorage.setItem('token', res.tokens.access);
+            console.log('token access', res.tokens.access);
+          }
+        })
+      );
+  }
 
-    console.log('📤 Login Headers:', headers.keys());
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+  
 
-    return this.http.post<any>(this.API_TO_LOGIN, userData, { headers }).pipe(
-      tap((response) => {
-        if (response && response.token) {
-          localStorage.setItem('auth_token', response.token);
-          console.log('🔑 Token saved:', response.token);
-        }
-      })
-    );
+  logOut(): void {
+    localStorage.removeItem('token');
   }
 }
+
+
